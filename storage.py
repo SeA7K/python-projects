@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-DATA_FILE = Path("journal_data.json")
+DATA_FILE = Path(__file__).resolve().with_name("journal_data.json")
 
 
 def load_entries() -> list:
@@ -19,10 +19,11 @@ def save_entries(entries: list) -> None:
     """
     Speichert alle Journal-Einträge in der JSON-Datei.
     """
-    DATA_FILE.write_text(
-        json.dumps(entries, ensure_ascii=False, indent=2),
-        encoding="utf-8"
+    temporary_file = DATA_FILE.with_suffix(DATA_FILE.suffix + ".tmp")
+    temporary_file.write_text(
+        json.dumps(entries, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+    temporary_file.replace(DATA_FILE)
 
 
 def upsert_entry(entries: list, new_entry: dict) -> list:

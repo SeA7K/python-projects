@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 from collections import Counter
 from pathlib import Path
 
-PLOTS_DIR = Path("plots")
-PLOTS_DIR.mkdir(exist_ok=True)
+PLOTS_DIR = Path(__file__).resolve().parent / "plots"
 
 def plot_scores(entries: list):
     """
@@ -32,7 +31,8 @@ def plot_scores(entries: list):
     plt.xticks(rotation=45)
     plt.tight_layout()
 
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S-%f")
+    PLOTS_DIR.mkdir(parents=True, exist_ok=True)
     plt.savefig(PLOTS_DIR / f"score_{timestamp}.png")
     plt.show()
     plt.close()
@@ -63,7 +63,8 @@ def plot_triggers(entries: list):
     plt.xticks(rotation=45)
     plt.tight_layout()
 
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S-%f")
+    PLOTS_DIR.mkdir(parents=True, exist_ok=True)
     plt.savefig(PLOTS_DIR / f"trigger_{timestamp}.png")
     plt.show()
     plt.close()
